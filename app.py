@@ -2,7 +2,7 @@
 
 from flask import Flask, request, jsonify, render_template
 import pickle
-import numpy as np
+import numpy 
 
 # Load the trained model
 model_path = 'model.pkl'
@@ -24,7 +24,7 @@ def predict():
     # Make prediction
     prediction = model.predict(final_features)
     output = prediction[0]
-    
+
     return render_template('index.html', prediction_text='Prediction: {}'.format(output))
 
 if __name__ == "__main__":
