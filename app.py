@@ -15,7 +15,15 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
+def home():
+    if request.method == "POST":
+        return "Handling POST request"
+    return "Welcome to my Football Goals Predictor!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    
 def predict():
     # Extract data from form
     int_features = [float(x) for x in request.form.values()]
