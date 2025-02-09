@@ -18,7 +18,7 @@ def home():
 @app.route("/predict", methods=["GET", "POST"])
 def predict_goals():
     if request.method == "POST":
-        data = request.get_json()
+        data = request.form
         # Your ML model prediction logic here
         return jsonify({"prediction": "some_value"})
     return "Prediction endpoint. Send a POST request with data."
