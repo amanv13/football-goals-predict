@@ -1,5 +1,3 @@
-# app.py
-
 from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
@@ -17,27 +15,18 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Extract data from form
-    int_features = [float(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    
-    # Make prediction
-    prediction = model.predict(final_features)
-    output = prediction[0] 
+    try:
+        # Extract data from form
+        int_features = [float(x) for x in request.form.values()]
+        final_features = [np.array(int_features)]
+        
+        # Make prediction
+        prediction = model.predict(final_features)
+        output = prediction[0]
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
-def predict():
-    # Extract data from form
-    int_features = [float(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    
-    # Make prediction
-    prediction = model.predict(final_features)
-    output = prediction[0]
-
-    return render_template('index.html', prediction_text='Prediction: {}'.format(output))
+        return render_template('index.html', prediction_text=f'Prediction: {output}')
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400  # Return error response if any issue occurs
 
 if __name__ == "__main__":
     app.run(debug=True)
