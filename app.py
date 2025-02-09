@@ -15,13 +15,15 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route("/predict", methods=["GET", "POST"])
-def predict_goals():
-    if request.method == "POST":
-        data = request.form
-        # Your ML model prediction logic here
-        return jsonify({"prediction": "some_value"})
-    return "Prediction endpoint. Send a POST request with data."
+@app.route('/predict', methods=['POST'])
+def predict():
+    # Extract data from form
+    int_features = [int(x) for x in request.form.values()]
+    final_features = [np.array(int_features)]
+    
+    # Make prediction
+    prediction = model.predict(final_features)
+    output = prediction[0] 
 
 if __name__ == "__main__":
     app.run(debug=True)
